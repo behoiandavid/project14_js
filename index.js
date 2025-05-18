@@ -4,19 +4,20 @@ async function getData(segment) {
     try {
         const response = await fetch(`${baseUrl}${segment}`);
 
-        if (response.ok) {
-            const data = await response.json();
-            console.log('Отримані дані:', data);
-            return data;
-        } else {
+        if (!response.ok) {
             console.error('HTTP помилка зі статусом:', response.status);
             return response.status;
         }
+
+        const data = await response.json();
+        console.log('Отримані дані:', data);
+        return data;
+
     } catch (error) {
         console.error('Помилка при запиті:', error.message);
         return error.message;
-    };
-};
+    }
+}
 
 getData('/posts');
 getData('/posts/1');
